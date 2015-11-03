@@ -1,0 +1,6 @@
+services:
+    app.client:
+        class: "%guzzle.client.class%"
+        arguments: ["http://localhost/api/web/app.php/"]
+        tag: 
+             name: "guzzle.client"
