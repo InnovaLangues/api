@@ -1,4 +1,4 @@
-        imports:
+imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
@@ -36,6 +36,7 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
 
 # Doctrine Configuration
 doctrine:
