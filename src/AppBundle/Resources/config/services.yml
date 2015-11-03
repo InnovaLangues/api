@@ -1,6 +1,6 @@
 services:
     app.client:
         class: "%guzzle.client.class%"
-        arguments: ["http://localhost/api/web/app.php/"]
+        arguments: ["http://ws-pusher.innovalangues.loc"]
         tag: 
              name: "guzzle.client"
