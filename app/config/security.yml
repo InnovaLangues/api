@@ -27,8 +27,8 @@ security:
             pattern: ^/api/doc                           
             anonymous: true 
 
-        api:
-            pattern: ^/                                # All URLs are protected
-            fos_oauth: true                            # OAuth2 protected resource
-            stateless: true                            # Do no set session cookies
-            anonymous: false 
+        #api:
+        #    pattern: ^/                                # All URLs are protected
+        #    fos_oauth: true                            # OAuth2 protected resource
+        #    stateless: true                            # Do no set session cookies
+        #    anonymous: false 

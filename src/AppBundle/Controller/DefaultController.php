@@ -38,9 +38,13 @@ class DefaultController extends FOSRestController
      */
     public function getAppsAction(Request $request, ParamFetcherInterface $paramFetcher)
     {
-        $client = $this->get('app.client');
-        $request = $client->createRequest('GET', 'apps');
-        $response = $client->send($request);
+        //$client = $this->get('app.client');
+        //$request = $client->createRequest('GET', 'apps');
+        //$response = $client->send($request);
+
+        $client   = $this->get('guzzle.client.ws_pusher');
+        die($client);
+        $response = $client->get('apps/');
         return $response->json();
     }
 
@@ -64,9 +68,67 @@ class DefaultController extends FOSRestController
      */
     public function getAppAction($guid)
     {
-        $client = $this->get('app.client');
-        $request = $client->createRequest('GET', 'apps/' . $guid);
-        $response = $client->send($request);
+        //$client = $this->get('app.client');
+        //$request = $client->createRequest('GET', 'apps/' . $guid);
+        //$response = $client->send($request);
+
+        $client   = $this->get('guzzle.client.ws_pusher');
+        $response = $client->get('apps/' . $guid);
+
+        return $response->json();
+    }
+
+    /**
+     * Get tokens for a given App.
+     *
+     * @ApiDoc(
+     *     resource = true,
+     *     description = "Gets Tokens for a given App",
+     *     output = "AppBundle\Entity\Token",
+     *     statusCodes = {
+     *         200 = "Returned when successful",
+     *         404 = "Returned when the app is not found"
+     *     }
+     * )
+     *
+     * @Annotations\View() 
+     * @param int $guid the app guid
+     * @return array
+     * @throws NotFoundHttpException when page not exist
+     */
+    public function postAppTokensAction($guid)
+    {
+
+       // $client = $this->get('app.client');
+        
+/*
+        $request = $client->createRequest(
+            'POST', 
+            'apps/' . $guid . '/tokens',
+            [ 
+                'json' => [
+                    'key' => 'kert'
+                ]
+            ]
+        );
+
+        $response = $client->request('POST', 'apps/' . $guid . '/tokens', [
+            'form_params' => [
+                'key' => 'abc',
+                'secret' => '123'
+            ]
+        ]);
+*/
+$client   = $this->get('guzzle.client.ws_pusher');
+$response = $client->get('/apps');
+
+
+//$response = $client->request('GET', 'http://www.google.com');
+//die($response);
+
+        //$request->setBody($data);
+        //die($request);
+        //$response = $client->send($request);
         return $response->json();
     }
 

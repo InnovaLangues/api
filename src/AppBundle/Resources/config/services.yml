@@ -1,6 +1,0 @@
-services:
-    app.client:
-        class: "%guzzle.client.class%"
-        arguments: ["http://ws-pusher.innovalangues.loc"]
-        tag: 
-             name: "guzzle.client"

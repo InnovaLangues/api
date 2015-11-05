@@ -125,3 +125,11 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: api
     user_class: AppBundle\Entity\User
+
+guzzle:
+    clients:
+        ws_pusher:
+            base_url: "http://ws-pusher.innovalangues.loc/app_dev.php"
+
+            #headers:
+            #    Accept: "application/json"
