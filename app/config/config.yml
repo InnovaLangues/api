@@ -129,7 +129,10 @@ fos_user:
 guzzle:
     clients:
         ws_pusher:
-            base_url: "http://ws-pusher.innovalangues.loc/app_dev.php"
-
-            #headers:
-            #    Accept: "application/json"
+            base_url: "http://ws-pusher.innovalangues.loc"
+            headers:
+                Accept: "application/json"
+        ws_github:
+            base_url: "https://api.github.com"
+            headers:
+                Accept: "application/json"

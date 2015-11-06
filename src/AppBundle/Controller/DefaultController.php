@@ -38,14 +38,11 @@ class DefaultController extends FOSRestController
      */
     public function getAppsAction(Request $request, ParamFetcherInterface $paramFetcher)
     {
-        //$client = $this->get('app.client');
-        //$request = $client->createRequest('GET', 'apps');
-        //$response = $client->send($request);
-
         $client   = $this->get('guzzle.client.ws_pusher');
-        die($client);
-        $response = $client->get('apps/');
-        return $response->json();
+
+        $response = $client->request('GET', '/apps');
+
+        return json_decode($response->getBody(), true);
     }
 
     /**
@@ -68,14 +65,10 @@ class DefaultController extends FOSRestController
      */
     public function getAppAction($guid)
     {
-        //$client = $this->get('app.client');
-        //$request = $client->createRequest('GET', 'apps/' . $guid);
-        //$response = $client->send($request);
-
         $client   = $this->get('guzzle.client.ws_pusher');
         $response = $client->get('apps/' . $guid);
 
-        return $response->json();
+        return json_decode($response->getBody(), true);
     }
 
     /**
@@ -98,39 +91,14 @@ class DefaultController extends FOSRestController
      */
     public function postAppTokensAction($guid)
     {
+        $client   = $this->get('guzzle.client.ws_pusher');
+        $response = $client->request('POST', '/apps/' . $guid . '/tokens', [
+                'form_params' => [
+                    'key' => 'abc4',
+                    'secret' => '1243'
+                ]   
+            ]);
 
-       // $client = $this->get('app.client');
-        
-/*
-        $request = $client->createRequest(
-            'POST', 
-            'apps/' . $guid . '/tokens',
-            [ 
-                'json' => [
-                    'key' => 'kert'
-                ]
-            ]
-        );
-
-        $response = $client->request('POST', 'apps/' . $guid . '/tokens', [
-            'form_params' => [
-                'key' => 'abc',
-                'secret' => '123'
-            ]
-        ]);
-*/
-$client   = $this->get('guzzle.client.ws_pusher');
-$response = $client->get('/apps');
-
-
-//$response = $client->request('GET', 'http://www.google.com');
-//die($response);
-
-        //$request->setBody($data);
-        //die($request);
-        //$response = $client->send($request);
-        return $response->json();
+        return json_decode($response->getBody(), true);
     }
-
-    
 }
