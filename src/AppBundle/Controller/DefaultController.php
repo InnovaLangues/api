@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\Prefix;
 
+use  Symfony\Component\HttpKernel\Exception\HttpException;
 
 class DefaultController extends FOSRestController
 {
@@ -92,12 +93,16 @@ class DefaultController extends FOSRestController
     public function postAppTokensAction($guid)
     {
         $client   = $this->get('guzzle.client.ws_pusher');
+
+        $key = substr( md5(rand()), 0, 20);
+        $secret = substr( md5(rand()), 0, 20);
+
         $response = $client->request('POST', '/apps/' . $guid . '/tokens', [
-                'form_params' => [
-                    'key' => 'abc4',
-                    'secret' => '1243'
-                ]   
-            ]);
+            'json' => [
+                'key' => $key,
+                'secret' => $secret
+            ]   
+        ]);
 
         return json_decode($response->getBody(), true);
     }
