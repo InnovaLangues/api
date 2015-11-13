@@ -51,7 +51,7 @@ class DefaultController extends FOSRestController
      *
      * @ApiDoc(
      *     resource = true,
-     *     description = "Gets a App for a given guid",
+     *     description = "Gets a App for a given appGuid",
      *     output = "AppBundle\Entity\App",
      *     statusCodes = {
      *         200 = "Returned when successful",
@@ -60,14 +60,40 @@ class DefaultController extends FOSRestController
      * )
      *
      * @Annotations\View() 
-     * @param int $guid the app guid
+     * @param int $appGuid the app appGuid
      * @return array
      * @throws NotFoundHttpException when page not exist
      */
-    public function getAppAction($guid)
+    public function getAppAction($appGuid)
     {
         $client   = $this->get('guzzle.client.ws_pusher');
-        $response = $client->get('apps/' . $guid);
+        $response = $client->get('apps/' . $appGuid);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * Delete single App Token.
+     *
+     * @ApiDoc(
+     *     resource = true,
+     *     description = "Deletes an App Token for a given appGuid and tokenKey",
+     *     output = "AppBundle\Entity\App",
+     *     statusCodes = {
+     *         200 = "Returned when successful",
+     *         404 = "Returned when the app is not found"
+     *     }
+     * )
+     *
+     * @Annotations\View() 
+     * @param int $appGuid the app appGuid
+     * @return array
+     * @throws NotFoundHttpException when page not exist
+     */
+    public function deleteAppTokenAction($appGuid, $tokenKey)
+    {
+        $client   = $this->get('guzzle.client.ws_pusher');
+        $response = $client->delete('apps/' . $appGuid . '/tokens/' . $tokenKey);
 
         return json_decode($response->getBody(), true);
     }
@@ -86,18 +112,18 @@ class DefaultController extends FOSRestController
      * )
      *
      * @Annotations\View() 
-     * @param int $guid the app guid
+     * @param int $appGuid the app appGuid
      * @return array
      * @throws NotFoundHttpException when page not exist
      */
-    public function postAppTokensAction($guid)
+    public function postAppTokensAction($appGuid)
     {
-        $client   = $this->get('guzzle.client.ws_pusher');
+        $client = $this->get('guzzle.client.ws_pusher');
 
         $key = substr( md5(rand()), 0, 20);
         $secret = substr( md5(rand()), 0, 20);
 
-        $response = $client->request('POST', '/apps/' . $guid . '/tokens', [
+        $response = $client->request('POST', '/apps/' . $appGuid . '/tokens', [
             'json' => [
                 'key' => $key,
                 'secret' => $secret
