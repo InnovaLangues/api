@@ -99,6 +99,75 @@ class DefaultController extends FOSRestController
     }
 
     /**
+     * Delete single App.
+     *
+     * @ApiDoc(
+     *     resource = true,
+     *     description = "Deletes an App Token for a given appGuid",
+     *     output = "AppBundle\Entity\App",
+     *     statusCodes = {
+     *         200 = "Returned when successful",
+     *         404 = "Returned when the app is not found"
+     *     }
+     * )
+     *
+     * @Annotations\View() 
+     * @param int $appGuid the app appGuid
+     * @return array
+     * @throws NotFoundHttpException when page not exist
+     */
+    public function deleteAppAction($appGuid)
+    {
+        $client   = $this->get('guzzle.client.ws_pusher');
+        $response = $client->delete('apps/' . $appGuid);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * Creates a new App.
+     *
+     * @ApiDoc(
+     *     resource = true,
+     *     description = "Gets Tokens for a given App",
+     *     output = "AppBundle\Entity\App",
+     *     statusCodes = {
+     *         200 = "Returned when successful",
+     *         500 = "Returned when the app cannot be added"
+     *     }
+     * )
+     *
+     * @Annotations\View() 
+     * @param int $appGuid the app appGuid
+     * @return array
+     * @throws NotFoundHttpException when page not exist
+     */
+    public function postAppAction()
+    {
+        $content = $this->get("request")->getContent();
+
+        if (!empty($content))
+        {
+            $params = json_decode($content); // 2nd param to get as array
+        }
+
+        if (!property_exists($params, 'slug')) {
+            //TODO throw error
+            die('NO SLUG');
+        }
+
+        $client = $this->get('guzzle.client.ws_pusher');
+
+        $response = $client->request('POST', '/apps', [
+            'json' => [
+                'slug' => $params->slug,
+            ]   
+        ]);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
      * Get tokens for a given App.
      *
      * @ApiDoc(
