@@ -189,15 +189,7 @@ class DefaultController extends FOSRestController
     {
         $client = $this->get('guzzle.client.ws_pusher');
 
-        $key = substr( md5(rand()), 0, 20);
-        $secret = substr( md5(rand()), 0, 20);
-
-        $response = $client->request('POST', '/apps/' . $appGuid . '/tokens', [
-            'json' => [
-                'key' => $key,
-                'secret' => $secret
-            ]   
-        ]);
+        $response = $client->request('POST', '/apps/' . $appGuid . '/tokens');
 
         return json_decode($response->getBody(), true);
     }
