@@ -25,7 +25,8 @@
         "friendsofsymfony/http-cache-bundle": "~1.0",
         "nelmio/cors-bundle": "~1.4",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "eightpoints/guzzle-bundle": "~4.2"
+        "eightpoints/guzzle-bundle": "~4.2",
+        "doctrine/doctrine-migrations-bundle": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

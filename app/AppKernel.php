@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new EightPoints\Bundle\GuzzleBundle\GuzzleBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new AppBundle\AppBundle(),
         );
 
