@@ -129,7 +129,7 @@ fos_user:
 guzzle:
     clients:
         ws_pusher:
-            base_url: "http://ws-pusher.innovalangues.loc"
+            base_url: %pusher_url%
             headers:
                 Accept: "application/json"
             options:
